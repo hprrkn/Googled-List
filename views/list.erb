@@ -1,0 +1,4 @@
+list.erb
+<% @words.each do |word| %>
+  <li><a href="/detail/<%=word.id%>"><%= word.wordtitle %></a></li>
+<% end %>
