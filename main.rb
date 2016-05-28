@@ -194,18 +194,18 @@ end
 post '/android/api/login' do
   @user = User.where({:username => params[:username]}).first
   if @user.present? && @user.password == params[:password]  then
-    token = "tokenstring" # todo: token生成する どこでtoken保持する??
-    res = {"status" => "200", "loginOk" => "true", "token" => token, "userId" => @user.id}
+    token = Digest::SHA1.hexdigest(@user.usrname)[0..10]
+    headers "token" => token
+    res = {"userId" => @user.id}
     res.to_json(:root => false)
   else
-    res = {"status" => "200", "loginOk" => "false", "token" => "", "userId" => ""}
+    res = {"loginOk" => "false", "token" => "", "userId" => ""}
     res.to_json(:root => false)
   end
 end
 
 get '/android/api/index' do
     if @loginOk then
-    p "loginok"
         result = {}
         comjson = []
         @userWords.group("strftime('%Y-%m', created_at)").count.each do |com|
@@ -214,7 +214,10 @@ get '/android/api/index' do
         tags = @userTags.all
         result["coms"] = comjson
         result["tagList"] = tags
-        p result
         result.to_json(:root => false)
     end
+end
+
+post '/android/api/add_word' do
+  new_word = Word.create({:user_id => @userId, :wordtitle => params[:word], :memo => params[:memo]})
 end
