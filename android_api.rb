@@ -1,13 +1,15 @@
 require 'sinatra/base'
 require './base.rb'
+require './main.rb'
 
 class AndroidAPI < Base
     post '/android/api/login' do
       @user = User.where({:username => params[:username]}).first
       if @user.present? && @user.password == params[:password]  then
-        token = Digest::SHA1.hexdigest(@user.usrname)[0..10]
-        headers "token" => token
-        res = {"userId" => @user.id}
+        @loginOk = true;
+        token = Digest::SHA1.hexdigest(@user.username)[0..10]
+        Token.create({:user_id => @user.id, :token => token})
+        res = {"userId" => @user.id, "token" => token, "loginOk" => true}
         res.to_json(:root => false)
       else
         res = {"loginOk" => "false", "token" => "", "userId" => ""}

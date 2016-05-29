@@ -18,19 +18,18 @@ class Base < Sinatra::Base
 
     before do
       if request.url =~ %r{/android} then
-        if !params[:token].nil? && params[:token] == "tokenstring" && !params[:userId].nil? then
-            @loginOk = true
-            @userWords = User.find(params[:userId]).words
-            @userTags = User.find(params[:userId]).tags
+        if request.url =~ %r{/android/api/login} then
         else
-            @loginOk = false
+            if !params[:token].nil? && !params[:userId].nil? && Token.where(params[:userId]).first.token == params[:token] then
+                @loginOk = true
+                @userWords = User.find(params[:userId]).words
+                @userTags = User.find(params[:userId]).tags
+            else
+                @loginOk = false
+            end
         end
       elsif request.url =~ %r{/login} then
-        p "login"
-        p request.url
       else
-        p "other"
-        p request.url
          if !session[:loginOk] then
            @msg = "Please LogIn"
            redirect '/login'
@@ -41,4 +40,5 @@ class Base < Sinatra::Base
          end
       end
     end
+
 end

@@ -30,6 +30,9 @@ class Tag < ActiveRecord::Base
   validates :tagname, presence: true
 end
 
+class Token < ActiveRecord::Base
+end
+
 class Main < Sinatra::Base
     use App
     use AndroidAPI
