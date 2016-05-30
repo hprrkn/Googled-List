@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require './base.rb'
-require './main.rb'
+#require './main.rb'
 
 class AndroidAPI < Base
     post '/android/api/login' do
@@ -32,6 +32,6 @@ class AndroidAPI < Base
     end
 
     post '/android/api/add_word' do
-      new_word = Word.create({:user_id => @userId, :wordtitle => params[:word], :memo => params[:memo]})
+      new_word = Word.create({:user_id => @userId, :wordtitle => params[:title], :memo => params[:memo]})
     end
 end

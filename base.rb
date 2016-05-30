@@ -22,6 +22,7 @@ class Base < Sinatra::Base
         else
             if !params[:token].nil? && !params[:userId].nil? && Token.where(params[:userId]).first.token == params[:token] then
                 @loginOk = true
+                @userId = params[:userId]
                 @userWords = User.find(params[:userId]).words
                 @userTags = User.find(params[:userId]).tags
             else

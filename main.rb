@@ -3,6 +3,7 @@ require 'active_record'
 require './base.rb'
 require './app.rb'
 require './android_api.rb'
+require 'logger'
 
 #require "sinatra/reloader" if development?
 
@@ -10,6 +11,7 @@ ActiveRecord::Base.establish_connection(
   "adapter" => "sqlite3",
   "database" => "./googledword.db"
 )
+ActiveRecord::Base.logger = Logger.new("/home/prrknh/SinatraApp/GoogledListBySinatra/log/activerecord.log")
 
 class User < ActiveRecord::Base
   has_many :words
