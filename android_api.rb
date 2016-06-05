@@ -13,7 +13,7 @@ class AndroidAPI < Base
         res.to_json(:root => false)
       else
         res = {"loginOk" => "false", "token" => "", "userId" => ""}
-        res.to_json(:root => false)
+        return res.to_json(:root => false)
       end
     end
 
@@ -27,11 +27,19 @@ class AndroidAPI < Base
             tags = @userTags.all
             result["coms"] = comjson
             result["tagList"] = tags
-            result.to_json(:root => false)
+            return result.to_json(:root => false)
         end
     end
 
     post '/android/api/add_word' do
       new_word = Word.create({:user_id => @userId, :wordtitle => params[:title], :memo => params[:memo]})
     end
+    
+    get %r{/android/api/list/(\d{4})\-(\d{2})} do |y,m|
+        p @userWords
+      from = Date::new(y.to_i,m.to_i,1)
+      to = from >> 1
+      @words = @userWords.where("created_at >= ? AND created_at < ?", from.strftime("%Y-%m-%d"), to.strftime("%Y-%m-%d"))
+      return {"wordList" => @words}.to_json
+    end  
 end

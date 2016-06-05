@@ -36,6 +36,6 @@ class Token < ActiveRecord::Base
 end
 
 class Main < Sinatra::Base
-    use App
     use AndroidAPI
+    use App
 end
