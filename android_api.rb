@@ -36,10 +36,10 @@ class AndroidAPI < Base
     end
     
     get %r{/android/api/list/(\d{4})\-(\d{2})} do |y,m|
-        p @userWords
       from = Date::new(y.to_i,m.to_i,1)
       to = from >> 1
       @words = @userWords.where("created_at >= ? AND created_at < ?", from.strftime("%Y-%m-%d"), to.strftime("%Y-%m-%d"))
-      return {"wordList" => @words}.to_json
+
+      return {"wordList" => @words}.to_json(:root => false)
     end  
 end
