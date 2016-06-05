@@ -5,7 +5,7 @@ require './app.rb'
 require './android_api.rb'
 require 'logger'
 
-#require "sinatra/reloader" if development?
+require "sinatra/reloader" if development?
 
 ActiveRecord::Base.establish_connection(
   "adapter" => "sqlite3",

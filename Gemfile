@@ -6,4 +6,4 @@ source "https://rubygems.org"
  gem "sinatra"
  gem "unicorn"
  gem "sqlite3"
-
+ gem 'sinatra-contrib'
