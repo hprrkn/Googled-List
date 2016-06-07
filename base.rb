@@ -20,7 +20,7 @@ class Base < Sinatra::Base
       if request.url =~ %r{/android} then
         if request.url =~ %r{/android/api/login} then
         else
-            if !params[:token].nil? && !params[:userId].nil? && Token.where(params[:userId]).first.token == params[:token] then
+            if !params[:token].nil? && !params[:userId].nil? && Token.where(user_id:params[:userId]).first.token == params[:token] then
                 @loginOk = true
                 @userId = params[:userId]
                 @userWords = User.find(params[:userId]).words.order("created_at DESC")
