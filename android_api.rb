@@ -43,6 +43,11 @@ class AndroidAPI < Base
     end  
 
     get '/android/api/tags' do
-        return {"tagList" => @userTags}.to_json(:toor => false)
+        return {"tagList" => @userTags}.to_json(:root => false)
     end
+
+    get %r{/android/api/words/tag/([0-9]*)} do |id|
+        @words = @userWords.includes(:tags).where('tags.id' => id)
+        return {"wordList" => @words}.to_json(:root => false)
+    end        
 end

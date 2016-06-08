@@ -23,8 +23,8 @@ class Base < Sinatra::Base
             if !params[:token].nil? && !params[:userId].nil? && Token.where(user_id:params[:userId]).first.token == params[:token] then
                 @loginOk = true
                 @userId = params[:userId]
-                @userWords = User.find(params[:userId]).words.order("created_at DESC")
-                @userTags = User.find(params[:userId]).tags.order("created_at DESC")
+                @userWords = User.find(params[:userId]).words.order("words.created_at DESC")
+                @userTags = User.find(params[:userId]).tags.order("tags.created_at DESC")
             else
                 @loginOk = false
             end
@@ -36,8 +36,8 @@ class Base < Sinatra::Base
            redirect '/login'
          else
            @userId = session[:uId]
-           @userWords = User.find(@userId).words.order("created_at DESC")
-           @userTags = User.find(@userId).tags.order("created_at DESC")
+           @userWords = User.find(@userId).words.order("words.created_at DESC")
+           @userTags = User.find(@userId).tags.order("tags.created_at DESC")
 
          end
       end
