@@ -39,7 +39,10 @@ class AndroidAPI < Base
       from = Date::new(y.to_i,m.to_i,1)
       to = from >> 1
       @words = @userWords.where("created_at >= ? AND created_at < ?", from.strftime("%Y-%m-%d"), to.strftime("%Y-%m-%d"))
-
       return {"wordList" => @words}.to_json(:root => false)
     end  
+
+    get '/android/api/tags' do
+        return {"tagList" => @userTags}.to_json(:toor => false)
+    end
 end
